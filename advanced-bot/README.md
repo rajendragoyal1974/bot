@@ -52,7 +52,7 @@ Commands scaffolded:
 ## Production Notes
 
 - Add persistent storage for models in `src/models/`.
-- Replace OAuth callback mock with real token exchange.
+- Implement full OAuth2 token exchange/user validation in `dashboard/routes/oauth.js` before enabling authenticated sessions.
 - Register slash command options/schemas before deployment.
-- Configure secure cookies (`secure: true`) behind HTTPS.
-- Add rate limiting and request auditing for dashboard APIs.
+- Set `SESSION_SECRET` in `.env`; dashboard startup now requires it.
+- Basic dashboard route rate limiting is included; extend it and add API-specific request auditing for production scale.

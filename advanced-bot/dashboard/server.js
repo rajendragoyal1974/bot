@@ -8,6 +8,12 @@ const session = require('express-session');
 
 const app = express();
 const port = Number(process.env.DASHBOARD_PORT || 3000);
+const isProduction = process.env.NODE_ENV === 'production';
+const sessionSecret = process.env.SESSION_SECRET;
+
+if (!sessionSecret) {
+  throw new Error('Missing SESSION_SECRET. Set it in .env before starting the dashboard.');
+}
 
 app.use(helmet());
 app.use(morgan('combined'));
@@ -15,10 +21,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'change-me',
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false,
-    cookie: { httpOnly: true, sameSite: 'lax', secure: false },
+    cookie: { httpOnly: true, sameSite: 'lax', secure: isProduction },
   }),
 );
 

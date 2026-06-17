@@ -17,8 +17,9 @@ router.get('/callback', (req, res) => {
     return res.status(400).json({ error: 'Missing OAuth2 authorization code' });
   }
 
-  req.session.user = { username: 'DiscordUser', id: 'pending-token-exchange' };
-  return res.redirect('/dashboard');
+  return res.status(501).json({
+    error: 'OAuth2 token exchange not implemented in scaffold. Implement token validation before enabling login.',
+  });
 });
 
 module.exports = router;
